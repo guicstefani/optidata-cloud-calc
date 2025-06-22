@@ -1,12 +1,12 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Calculator, Target, Template, Settings, ChevronLeft } from 'lucide-react';
+import { Calculator, Target, FileTemplate, Settings, ChevronLeft } from 'lucide-react';
 
 const menuItems = [
   { id: 'calculator', label: 'Calculadora', icon: Calculator, path: '/' },
   { id: 'goals', label: 'Metas & MRR', icon: Target, path: '/goals' },
-  { id: 'templates', label: 'Templates', icon: Template, path: '/templates' },
+  { id: 'templates', label: 'Templates', icon: FileTemplate, path: '/templates' },
   { id: 'config', label: 'Configurações', icon: Settings, path: '/config' },
 ];
 

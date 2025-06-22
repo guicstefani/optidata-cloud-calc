@@ -6,7 +6,7 @@ import { FuturisticInput } from '../ui/FuturisticInput';
 import { ResourceSlider } from './ResourceSlider';
 import { AnimatedValue } from '../ui/AnimatedValue';
 import { GoldButton } from '../ui/GoldButton';
-import { Cpu, HardDrive, MemoryStick, Server, Save, Template } from 'lucide-react';
+import { Cpu, HardDrive, MemoryStick, Server, Save, FileTemplate } from 'lucide-react';
 import { useCalculatorStore } from '../../stores/calculatorStore';
 
 export const VMConfigurator = () => {
@@ -150,7 +150,7 @@ export const VMConfigurator = () => {
                   Salvar Configuração
                 </GoldButton>
                 <GoldButton variant="secondary" size="lg" fullWidth>
-                  <Template className="w-4 h-4" />
+                  <FileTemplate className="w-4 h-4" />
                   Salvar como Template
                 </GoldButton>
               </div>

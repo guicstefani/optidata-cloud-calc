@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
-import { Sidebar } from '../components/layout/Sidebar'
-import { CalculatorMain } from '../components/calculator/CalculatorMain'
+import { PremiumSidebar } from '../components/layout/PremiumSidebar'
+import { VMConfigurator } from '../components/calculator/VMConfigurator'
 import { GoalsDashboard } from '../components/goals/GoalsDashboard'
 
 const Index = () => {
@@ -10,39 +10,48 @@ const Index = () => {
   const renderContent = () => {
     switch (activeSection) {
       case 'calculator':
-        return <CalculatorMain />
+        return <VMConfigurator />
       case 'goals':
         return <GoalsDashboard />
       case 'templates':
         return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold gradient-text mb-4">Templates</h2>
-            <p className="text-muted-foreground">Gerenciamento avançado de templates em desenvolvimento</p>
+          <div className="text-center py-24">
+            <h2 className="text-4xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-gold-light to-gold-primary bg-clip-text text-transparent">
+                Templates
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400">Sistema de templates em desenvolvimento</p>
           </div>
         )
-      case 'settings':
+      case 'config':
         return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold gradient-text mb-4">Configurações</h2>
-            <p className="text-muted-foreground">Painel de configurações em desenvolvimento</p>
+          <div className="text-center py-24">
+            <h2 className="text-4xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-gold-light to-gold-primary bg-clip-text text-transparent">
+                Configurações
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400">Painel de configurações em desenvolvimento</p>
           </div>
         )
       default:
-        return <CalculatorMain />
+        return <VMConfigurator />
     }
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar 
+    <div className="min-h-screen relative">
+      {/* Fundo animado */}
+      <div className="animated-bg" />
+      
+      <PremiumSidebar 
         activeSection={activeSection} 
         onSectionChange={setActiveSection} 
       />
       
-      <main className="ml-64 p-6">
-        <div className="max-w-7xl mx-auto">
-          {renderContent()}
-        </div>
+      <main className="ml-80 p-8 relative z-10">
+        {renderContent()}
       </main>
     </div>
   )

@@ -8,96 +8,81 @@ export const useCalculatorStore = create(
     (set, get) => ({
       // Estado dos inputs
       inputs: {
+        name: '',
         vcpu: 4,
         ramGB: 16,
-        storageFCM: 0,
         storageSSD: 200,
+        storageFCM: 0,
         so: 'ubuntu',
         database: 'postgresql',
-        monitoramento: true,
         tipoBackup: 'padrao',
+        monitoramento: true,
         antivirus: false,
         ipsAdicionais: 0
       },
       
-      // Resultados dos cálculos
+      // Resultados calculados
       results: {
-        compute: 0,
-        memoria: 0,
-        armazenamento: 0,
-        backup: 0,
-        monitoramento: 0,
-        licencas: 0,
-        total: 0
+        monthly: 0,
+        annual: 0,
+        breakdown: {
+          compute: 0,
+          memory: 0,
+          storage: 0,
+          backup: 0,
+          monitoring: 0,
+          licenses: 0
+        }
       },
-      
-      // Templates salvos
-      templates: [],
       
       // Actions
       updateInput: (field, value) => {
         set((state) => ({
           inputs: { ...state.inputs, [field]: value }
         }))
-        // Recalcular automaticamente
-        get().calculateResults()
       },
       
       calculateResults: () => {
         const { inputs } = get()
         const results = calcularVM(inputs)
-        set({ results })
-      },
-      
-      loadTemplate: (templateConfig) => {
-        set({ inputs: templateConfig })
-        get().calculateResults()
-      },
-      
-      saveTemplate: (name, description) => {
-        const { inputs, templates } = get()
-        const newTemplate = {
-          id: Date.now(),
-          name,
-          description,
-          config: { ...inputs },
-          createdAt: new Date().toISOString()
-        }
-        set({ templates: [...templates, newTemplate] })
-      },
-      
-      deleteTemplate: (id) => {
-        const { templates } = get()
-        set({ templates: templates.filter(t => t.id !== id) })
+        
+        set({
+          results: {
+            monthly: results.total,
+            annual: results.total * 12,
+            breakdown: {
+              compute: results.compute,
+              memory: results.memoria,
+              storage: results.armazenamento,
+              backup: results.backup,
+              monitoring: results.monitoramento,
+              licenses: results.licencas
+            }
+          }
+        })
       },
       
       resetInputs: () => {
         set({
           inputs: {
+            name: '',
             vcpu: 4,
             ramGB: 16,
-            storageFCM: 0,
             storageSSD: 200,
+            storageFCM: 0,
             so: 'ubuntu',
             database: 'postgresql',
-            monitoramento: true,
             tipoBackup: 'padrao',
+            monitoramento: true,
             antivirus: false,
             ipsAdicionais: 0
           }
         })
-        get().calculateResults()
       }
     }),
     {
       name: 'calculator-storage',
-      partialize: (state) => ({ 
-        inputs: state.inputs, 
-        templates: state.templates 
-      })
+      partialize: (state) => ({ inputs: state.inputs })
     }
   )
 )
-
-// Inicializar cálculos
-useCalculatorStore.getState().calculateResults()
